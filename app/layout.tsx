@@ -25,7 +25,7 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.miamicruiseboattour.com"),
+  metadataBase: new URL("https://www.miamicruisetour.com"),
   title: "Miami Cruise & Boat Tour 2026 | Sunset Sailings, Yacht Charters & Sightseeing Cruises",
   description:
     "Book a Miami Cruise & Boat Tour — sightseeing cruises past Biscayne Bay's celebrity homes and skyline, live-DJ sunset party cruises, and private yacht charters. Reserve your Miami boat tour online today.",

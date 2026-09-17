@@ -25,7 +25,7 @@ export const DEFAULT_CONTACT_CONTENT: ContactContent = {
     src: img("galleryDeck", 1000),
     alt: "Guests relaxing on the open deck during the Miami Cruise & Boat Tour",
   },
-  email: "reservations@miamicruiseboattour.com",
+  email: "reservations@miamicruisetour.com",
   supportHours: "Every day, 8:00 am – 8:00 pm Eastern Time",
 };
 

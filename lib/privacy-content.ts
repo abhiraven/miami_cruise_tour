@@ -52,11 +52,11 @@ export const DEFAULT_PRIVACY_CONTENT: PrivacyContent = {
     },
     {
       title: "Your Rights",
-      body: "You may request access to, correction of, or deletion of the personal information we hold about you by contacting us at reservations@miamicruiseboattour.com.",
+      body: "You may request access to, correction of, or deletion of the personal information we hold about you by contacting us at reservations@miamicruisetour.com.",
     },
     {
       title: "Contact Us",
-      body: "Questions about this privacy policy or how your information is handled can be sent to reservations@miamicruiseboattour.com or via our contact page.",
+      body: "Questions about this privacy policy or how your information is handled can be sent to reservations@miamicruisetour.com or via our contact page.",
     },
   ],
 };

@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 // across to the same path + query string on www, so search engines fully
 // consolidate ranking signals onto the one canonical host instead of
 // splitting them across both.
-const APEX_HOST = "miamicruiseboattour.com";
-const WWW_HOST = "www.miamicruiseboattour.com";
+const APEX_HOST = "miamicruisetour.com";
+const WWW_HOST = "www.miamicruisetour.com";
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
