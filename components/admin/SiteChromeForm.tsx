@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Field, Repeater, Section, setPath } from "./FormFields";
+import { Field, ImageUploadField, Repeater, Section, setPath } from "./FormFields";
 import type { FooterColumn, SiteChromeContent } from "@/lib/site-chrome-content";
 
 export interface SiteChromeFormProps {
@@ -138,6 +138,37 @@ export default function SiteChromeForm({ initialContent }: SiteChromeFormProps) 
           onChange={(v) => update(["footer", "copyright"], v)}
           textarea
           hint="The current year and © are added automatically — just write the text that follows it."
+        />
+      </Section>
+
+      <Section
+        title="Mobile Sticky Book Bar"
+        description="The bar that sticks to the bottom of the screen on phones once someone scrolls down, on every page"
+        defaultOpen
+      >
+        <ImageUploadField
+          label="Thumbnail Photo"
+          value={content.mobileBookBar?.image}
+          onChange={(v) => update(["mobileBookBar", "image"], v)}
+          uploadType="site"
+          altValue={content.mobileBookBar?.imageAlt}
+          onAltChange={(v) => update(["mobileBookBar", "imageAlt"], v)}
+        />
+        <Field
+          label="Title"
+          value={content.mobileBookBar?.title}
+          onChange={(v) => update(["mobileBookBar", "title"], v)}
+        />
+        <Field
+          label="Subtitle"
+          value={content.mobileBookBar?.subtitle}
+          onChange={(v) => update(["mobileBookBar", "subtitle"], v)}
+          hint='e.g. "From €59 · 4.9 ★ (2,340)"'
+        />
+        <Field
+          label="Button Text"
+          value={content.mobileBookBar?.ctaLabel}
+          onChange={(v) => update(["mobileBookBar", "ctaLabel"], v)}
         />
       </Section>
     </form>

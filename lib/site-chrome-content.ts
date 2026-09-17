@@ -1,4 +1,5 @@
 import { getContent, saveContent } from "@/lib/content-store";
+import { img } from "@/lib/images";
 
 export interface NavItem {
   label: string;
@@ -17,6 +18,13 @@ export interface SiteChromeContent {
     about: { heading: string; text: string };
     columns: FooterColumn[];
     copyright: string;
+  };
+  mobileBookBar: {
+    image: string;
+    imageAlt: string;
+    title: string;
+    subtitle: string;
+    ctaLabel: string;
   };
 }
 
@@ -58,6 +66,13 @@ export const DEFAULT_SITE_CHROME_CONTENT: SiteChromeContent = {
       },
     ],
     copyright: "Miami Cruise & Boat Tour. All rights reserved.",
+  },
+  mobileBookBar: {
+    image: img("galleryDeck", 120, 70),
+    imageAlt: "A guest relaxing on the open deck during a Miami boat tour",
+    title: "Miami Cruise & Boat Tour",
+    subtitle: "From €59 · 4.9 ★ (2,340)",
+    ctaLabel: "Book Now",
   },
 };
 

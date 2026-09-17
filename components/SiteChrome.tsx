@@ -26,7 +26,7 @@ export default function SiteChrome({
       <Header chrome={chrome} />
       <main className="flex-1">{children}</main>
       <Footer chrome={chrome} />
-      <MobileBookBar />
+      <MobileBookBar chrome={chrome} />
     </div>
   );
 }
