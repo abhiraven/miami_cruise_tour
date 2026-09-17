@@ -45,59 +45,64 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json({ error: "You can only edit your own account." }, { status: 403 });
   }
 
-  await ensureSchema();
-  const existingRows = (await sql`SELECT * FROM admin_users WHERE id = ${targetId}`) as any[];
-  const existing = existingRows[0];
-  if (!existing) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
-
-  const body = await request.json().catch(() => null);
-
-  let role = existing.role || "editor";
-  if (body?.role !== undefined && body.role !== existing.role) {
-    if (me.role !== "admin") {
-      return NextResponse.json({ error: "Only admins can change roles." }, { status: 403 });
+  try {
+    await ensureSchema();
+    const existingRows = (await sql`SELECT * FROM admin_users WHERE id = ${targetId}`) as any[];
+    const existing = existingRows[0];
+    if (!existing) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
-    if (isSelf) {
-      return NextResponse.json({ error: "You can't change your own role." }, { status: 400 });
-    }
-    if (existing.role === "admin" && body.role !== "admin") {
-      const adminCount = await countAdmins();
-      if (adminCount <= 1) {
-        return NextResponse.json({ error: "Can't remove the last admin." }, { status: 400 });
+
+    const body = await request.json().catch(() => null);
+
+    let role = existing.role || "editor";
+    if (body?.role !== undefined && body.role !== existing.role) {
+      if (me.role !== "admin") {
+        return NextResponse.json({ error: "Only admins can change roles." }, { status: 403 });
       }
+      if (isSelf) {
+        return NextResponse.json({ error: "You can't change your own role." }, { status: 400 });
+      }
+      if (existing.role === "admin" && body.role !== "admin") {
+        const adminCount = await countAdmins();
+        if (adminCount <= 1) {
+          return NextResponse.json({ error: "Can't remove the last admin." }, { status: 400 });
+        }
+      }
+      role = body.role === "admin" ? "admin" : "editor";
     }
-    role = body.role === "admin" ? "admin" : "editor";
-  }
 
-  let permissions = existing.permissions || "[]";
-  if (body?.permissions !== undefined) {
-    if (me.role !== "admin") {
-      return NextResponse.json({ error: "Only admins can change page access." }, { status: 403 });
+    let permissions = existing.permissions || "[]";
+    if (body?.permissions !== undefined) {
+      if (me.role !== "admin") {
+        return NextResponse.json({ error: "Only admins can change page access." }, { status: 403 });
+      }
+      if (!Array.isArray(body.permissions)) {
+        return NextResponse.json({ error: "Invalid page access list." }, { status: 400 });
+      }
+      const cleaned = body.permissions.filter((key: any) => (VALID_PAGE_KEYS as string[]).includes(key));
+      permissions = JSON.stringify(cleaned);
     }
-    if (!Array.isArray(body.permissions)) {
-      return NextResponse.json({ error: "Invalid page access list." }, { status: 400 });
-    }
-    const cleaned = body.permissions.filter((key: any) => (VALID_PAGE_KEYS as string[]).includes(key));
-    permissions = JSON.stringify(cleaned);
-  }
 
-  let passwordHash = existing.password_hash;
-  if (body?.password) {
-    const passwordError = getPasswordError(body.password);
-    if (passwordError) {
-      return NextResponse.json({ error: passwordError }, { status: 400 });
+    let passwordHash = existing.password_hash;
+    if (body?.password) {
+      const passwordError = getPasswordError(body.password);
+      if (passwordError) {
+        return NextResponse.json({ error: passwordError }, { status: 400 });
+      }
+      passwordHash = bcrypt.hashSync(body.password, 10);
     }
-    passwordHash = bcrypt.hashSync(body.password, 10);
-  }
 
-  const rows = (await sql`
-    UPDATE admin_users SET password_hash = ${passwordHash}, role = ${role}, permissions = ${permissions}
-    WHERE id = ${targetId}
-    RETURNING id, username, email, role, permissions, created_at
-  `) as any[];
-  return NextResponse.json({ user: serializeUser(rows[0]) });
+    const rows = (await sql`
+      UPDATE admin_users SET password_hash = ${passwordHash}, role = ${role}, permissions = ${permissions}
+      WHERE id = ${targetId}
+      RETURNING id, username, email, role, permissions, created_at
+    `) as any[];
+    return NextResponse.json({ user: serializeUser(rows[0]) });
+  } catch (err) {
+    console.error("[PUT /api/admin/users/[id]]", err);
+    return NextResponse.json({ error: "Failed to update user." }, { status: 500 });
+  }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
@@ -117,20 +122,25 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     return NextResponse.json({ error: "You can't delete your own account." }, { status: 400 });
   }
 
-  await ensureSchema();
-  const existingRows = (await sql`SELECT * FROM admin_users WHERE id = ${targetId}`) as any[];
-  const existing = existingRows[0];
-  if (!existing) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
-
-  if (existing.role === "admin") {
-    const adminCount = await countAdmins();
-    if (adminCount <= 1) {
-      return NextResponse.json({ error: "Can't delete the last admin." }, { status: 400 });
+  try {
+    await ensureSchema();
+    const existingRows = (await sql`SELECT * FROM admin_users WHERE id = ${targetId}`) as any[];
+    const existing = existingRows[0];
+    if (!existing) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
-  }
 
-  await sql`DELETE FROM admin_users WHERE id = ${targetId}`;
-  return NextResponse.json({ ok: true });
+    if (existing.role === "admin") {
+      const adminCount = await countAdmins();
+      if (adminCount <= 1) {
+        return NextResponse.json({ error: "Can't delete the last admin." }, { status: 400 });
+      }
+    }
+
+    await sql`DELETE FROM admin_users WHERE id = ${targetId}`;
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("[DELETE /api/admin/users/[id]]", err);
+    return NextResponse.json({ error: "Failed to delete user." }, { status: 500 });
+  }
 }

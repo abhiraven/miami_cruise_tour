@@ -31,11 +31,16 @@ export async function GET() {
   if (!me) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  await ensureSchema();
-  const rows = (await sql`
-    SELECT id, username, email, role, permissions, created_at FROM admin_users ORDER BY id ASC
-  `) as any[];
-  return NextResponse.json({ users: rows.map(serializeUser) });
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      SELECT id, username, email, role, permissions, created_at FROM admin_users ORDER BY id ASC
+    `) as any[];
+    return NextResponse.json({ users: rows.map(serializeUser) });
+  } catch (err) {
+    console.error("[GET /api/admin/users]", err);
+    return NextResponse.json({ error: "Failed to load users." }, { status: 500 });
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -63,18 +68,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: passwordError }, { status: 400 });
   }
 
-  await ensureSchema();
-  const existingRows = (await sql`
-    SELECT id FROM admin_users WHERE username = ${email} OR email = ${email}
-  `) as any[];
-  if (existingRows[0]) {
-    return NextResponse.json({ error: "A user with that email already exists." }, { status: 409 });
-  }
-
-  const hash = bcrypt.hashSync(password, 10);
-  const permissions = JSON.stringify([]);
-
   try {
+    await ensureSchema();
+    const existingRows = (await sql`
+      SELECT id FROM admin_users WHERE username = ${email} OR email = ${email}
+    `) as any[];
+    if (existingRows[0]) {
+      return NextResponse.json({ error: "A user with that email already exists." }, { status: 409 });
+    }
+
+    const hash = bcrypt.hashSync(password, 10);
+    const permissions = JSON.stringify([]);
+
     const rows = (await sql`
       INSERT INTO admin_users (username, email, password_hash, role, permissions, created_at)
       VALUES (${email}, ${email}, ${hash}, ${role}, ${permissions}, NOW())
@@ -85,6 +90,7 @@ export async function POST(request: NextRequest) {
     if (err?.code === "23505" || String(err).includes("duplicate key")) {
       return NextResponse.json({ error: "A user with that email already exists." }, { status: 409 });
     }
+    console.error("[POST /api/admin/users]", err);
     return NextResponse.json({ error: "Failed to create user." }, { status: 500 });
   }
 }

@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const content = await getHomeContent();
+  const [content, latestPosts] = await Promise.all([getHomeContent(), getLatestPosts()]);
   const {
     hero,
     trustBar,
@@ -58,7 +58,6 @@ export default async function HomePage() {
     faq,
     finalCta,
   } = content;
-  const latestPosts = await getLatestPosts();
 
   return (
     <>
@@ -70,7 +69,6 @@ export default async function HomePage() {
             alt=""
             fill
             sizes="100vw"
-            priority
             quality={55}
             className="object-cover opacity-25"
             aria-hidden="true"

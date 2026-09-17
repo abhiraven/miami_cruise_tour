@@ -9,9 +9,14 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   if (!hasPageAccess(session, "posts")) return NextResponse.json({ error: "Not authorized." }, { status: 403 });
 
-  await ensureSchema();
-  const posts = await sql`SELECT * FROM posts ORDER BY updated_at DESC`;
-  return NextResponse.json({ posts });
+  try {
+    await ensureSchema();
+    const posts = await sql`SELECT * FROM posts ORDER BY updated_at DESC`;
+    return NextResponse.json({ posts });
+  } catch (err) {
+    console.error("[GET /api/admin/posts]", err);
+    return NextResponse.json({ error: "Failed to load posts." }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {

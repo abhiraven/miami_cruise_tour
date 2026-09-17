@@ -32,7 +32,7 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
     setSaving(true);
     setMessage("");
 
-    const packagesList: any[] = content.packages || (content as any).tours || [];
+    const packagesList: any[] = content.packages || [];
     const normalized: HomeContent = {
       ...content,
       packages: packagesList.map((p: any, i: number) => ({
@@ -111,7 +111,7 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
 
       <Section title="Dinner Cruise Packages" description="The bookable dinner cruise packages shown in the main section" defaultOpen>
         <Repeater
-          items={content.packages || (content as any).tours}
+          items={content.packages}
           onChange={(v) => update(["packages"], v)}
           fields={[
             { key: "title", label: "Title" },

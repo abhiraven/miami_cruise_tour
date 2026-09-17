@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { sql, ensureSchema } from "@/lib/db";
 
 // Generic deep-merge: defaults define the full shape, overrides fill in
@@ -25,7 +26,18 @@ export function deepMerge<T>(defaults: T, overrides: unknown): T {
 // Generic reader/writer for the one-JSON-blob-per-key pattern every
 // editable page (home, about, contact, privacy, site-chrome, blog) uses
 // against the `site_content` table.
-export async function getContent<T>(key: string, defaults: T): Promise<T> {
+//
+// Wrapped in React's cache() so repeat calls with the same (key, defaults)
+// during a single request/render pass — e.g. generateMetadata() and the
+// page component both reading the same content — hit the database once
+// instead of twice. Each getXContent() wrapper (getHomeContent, etc.)
+// always passes the same module-level DEFAULT_X_CONTENT object reference,
+// so the cache key stays stable across those calls within one request.
+// This never serves stale data across requests: cache() only memoizes for
+// the lifetime of a single render, and every page here still sets
+// `dynamic = "force-dynamic"` with the underlying sql client's
+// `cache: "no-store"`, so each new request re-fetches from the database.
+export const getContent = cache(async function getContent<T>(key: string, defaults: T): Promise<T> {
   try {
     await ensureSchema();
     const rows = await sql`SELECT value FROM site_content WHERE key = ${key}`;
@@ -37,7 +49,7 @@ export async function getContent<T>(key: string, defaults: T): Promise<T> {
     console.error(`[getContent:${key}] falling back to defaults due to:`, err);
     return defaults;
   }
-}
+});
 
 export async function saveContent<T>(key: string, content: T): Promise<void> {
   await ensureSchema();

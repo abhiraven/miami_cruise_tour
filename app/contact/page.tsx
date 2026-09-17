@@ -33,7 +33,7 @@ export default async function ContactPage() {
                 src={image.src}
                 alt={image.alt}
                 fill
-                sizes="100vw"
+                sizes="(min-width: 896px) 896px, 100vw"
                 priority
                 className="object-cover"
               />

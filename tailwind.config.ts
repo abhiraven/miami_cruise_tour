@@ -23,9 +23,13 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
-        sans: ["ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
-        serif: ["ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
+        // next/font/google self-hosts Playfair Display / Jost at build time
+        // and exposes them as CSS variables on <html> (see app/layout.tsx).
+        // The variable comes first so the real webfont is used once loaded,
+        // with the same system-serif stack as a no-JS/loading fallback.
+        display: ["var(--font-display)", "ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
+        sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+        serif: ["var(--font-display)", "ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
       },
     },
   },

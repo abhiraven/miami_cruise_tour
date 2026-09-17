@@ -43,9 +43,11 @@ function formatDate(dateStr: string): string {
 }
 
 export default async function BlogPage() {
-  const { hero } = await getBlogContent();
-  const posts = await getPublishedPosts();
-  const { schedule, location } = await getHomeContent();
+  const [{ hero }, posts, { schedule, location }] = await Promise.all([
+    getBlogContent(),
+    getPublishedPosts(),
+    getHomeContent(),
+  ]);
 
   const featured = posts.find((p) => p.featured === 1) || posts[0] || null;
   const trending = posts.filter((p) => p.slug !== featured?.slug).slice(0, 3);
@@ -86,6 +88,7 @@ export default async function BlogPage() {
                       alt={featured.cover_image_alt || featured.title}
                       fill
                       sizes="(min-width: 640px) 50vw, 100vw"
+                      priority
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <span className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-miami-gold px-3 py-1 text-xs font-bold text-miami-navy shadow">
