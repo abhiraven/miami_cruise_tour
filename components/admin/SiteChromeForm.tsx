@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Field, ImageUploadField, Repeater, Section, setPath } from "./FormFields";
+import { Field, Repeater, Section, setPath } from "./FormFields";
 import type { FooterColumn, SiteChromeContent } from "@/lib/site-chrome-content";
 
 export interface SiteChromeFormProps {
@@ -66,15 +66,22 @@ export default function SiteChromeForm({ initialContent }: SiteChromeFormProps) 
         </button>
       </div>
 
-      <Section title="Logo" description="Shown at the top-left of every page" defaultOpen>
-        <ImageUploadField
-          label="Logo"
-          value={content.logo?.src}
-          onChange={(v) => update(["logo", "src"], v)}
-          uploadType="site-chrome"
-          altValue={content.logo?.alt}
-          onAltChange={(v) => update(["logo", "alt"], v)}
-          altLabel="Alt Text (for accessibility & SEO)"
+      <Section
+        title="Logo"
+        description="Shown at the top-left of every page — a fixed boat icon plus your brand text (no image upload; the icon always matches the site's design)"
+        defaultOpen
+      >
+        <Field
+          label="Brand Name"
+          value={content.logo?.mainText}
+          onChange={(v) => update(["logo", "mainText"], v)}
+          hint='Shown next to the icon in bold, e.g. "Miami Cruise."'
+        />
+        <Field
+          label="Tagline"
+          value={content.logo?.subText}
+          onChange={(v) => update(["logo", "subText"], v)}
+          hint='Small text under the brand name, e.g. "& Boat Tour"'
         />
       </Section>
 

@@ -11,7 +11,7 @@ export interface FooterColumn {
 }
 
 export interface SiteChromeContent {
-  logo: { src?: string; alt?: string; mainText?: string; subText?: string };
+  logo: { mainText?: string; subText?: string };
   navbar: { items: NavItem[] };
   footer: {
     about: { heading: string; text: string };
