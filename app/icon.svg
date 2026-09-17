@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0B2E44" />
+  <rect width="64" height="64" rx="14" fill="#0F2D4A" />
   <path
     d="M8 50c4-2.5 8-2.5 12 0s8 2.5 12 0 8-2.5 12 0 8 2.5 12 0"
-    stroke="#FF6B4A"
+    stroke="#C7A461"
     stroke-width="2.25"
     stroke-linecap="round"
     opacity="0.55"
     fill="none"
   />
-  <path d="M8 41.5h30" stroke="#FF6B4A" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M8 41.5h30" stroke="#C7A461" stroke-width="3" stroke-linecap="round" fill="none" />
   <path
     d="M12 41.5c0-11 7.5-18 13.5-18s13.5 7 13.5 18"
-    stroke="#FF6B4A"
+    stroke="#C7A461"
     stroke-width="3"
     stroke-linecap="round"
     fill="none"
   />
-  <path d="M19 30.5v11M32 24.5v17" stroke="#FF6B4A" stroke-width="2.25" stroke-linecap="round" fill="none" />
+  <path d="M19 30.5v11M32 24.5v17" stroke="#C7A461" stroke-width="2.25" stroke-linecap="round" fill="none" />
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"
     d="M46 8a10 10 0 1 0 8.4 15.4A8 8 0 0 1 46 8Z"
-    fill="#FF9478"
+    fill="#D8BF90"
   />
 </svg>

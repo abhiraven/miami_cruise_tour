@@ -78,7 +78,7 @@ export default async function HomePage() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, rgba(250,249,246,0.97) 0%, rgba(250,249,246,0.94) 40%, rgba(250,249,246,0.55) 70%, rgba(250,249,246,0.2) 100%)",
+              "linear-gradient(90deg, rgba(247,244,237,0.97) 0%, rgba(247,244,237,0.94) 40%, rgba(247,244,237,0.55) 70%, rgba(247,244,237,0.2) 100%)",
           }}
           aria-hidden="true"
         />

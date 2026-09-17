@@ -8,8 +8,8 @@ html {
 }
 
 body {
-  background-color: #f6fbfc;
-  color: #0b1720;
+  background-color: #f7f4ed;
+  color: #1e1e1e;
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 1.0625rem;
   line-height: 1.65;
@@ -25,7 +25,7 @@ body {
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content h2 {
@@ -33,7 +33,7 @@ body {
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content h3 {
@@ -41,7 +41,7 @@ body {
   font-weight: 700;
   margin-top: 1.75rem;
   margin-bottom: 0.6rem;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content h4 {
@@ -49,7 +49,7 @@ body {
   font-weight: 700;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content h5 {
@@ -57,7 +57,7 @@ body {
   font-weight: 700;
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content h6 {
@@ -67,7 +67,7 @@ body {
   letter-spacing: 0.02em;
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content p {
@@ -76,7 +76,7 @@ body {
 }
 
 .prose-content strong {
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 .prose-content em {
@@ -114,13 +114,13 @@ body {
 .prose-content blockquote {
   margin: 1.5rem 0;
   padding-left: 1rem;
-  border-left: 3px solid #ff6b4a;
-  color: rgba(11, 30, 59, 0.7);
+  border-left: 3px solid #c7a461;
+  color: rgba(15, 45, 74, 0.7);
   font-style: italic;
 }
 
 .prose-content a {
-  color: #ff6b4a;
+  color: #c7a461;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -146,19 +146,19 @@ body {
   text-align: center;
   font-size: 0.8rem;
   font-style: italic;
-  color: rgba(11, 30, 59, 0.6);
+  color: rgba(15, 45, 74, 0.6);
 }
 
 .prose-content hr {
   margin: 2rem 0;
   border: none;
-  border-top: 1px solid #dceef0;
+  border-top: 1px solid #ede2cc;
 }
 
 .prose-content p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
-  color: rgba(11, 30, 59, 0.35);
+  color: rgba(15, 45, 74, 0.35);
   pointer-events: none;
   height: 0;
 }
@@ -178,7 +178,7 @@ body {
 
 .prose-content th,
 .prose-content td {
-  border: 1px solid #dceef0;
+  border: 1px solid #ede2cc;
   padding: 0.5rem 0.75rem;
   text-align: left;
   vertical-align: top;
@@ -187,16 +187,16 @@ body {
 }
 
 .prose-content th {
-  background: #dceef0;
+  background: #ede2cc;
   font-weight: 700;
-  color: #0b2e44;
+  color: #0f2d4a;
 }
 
 /* Only relevant inside the editor (Tiptap's Table extension adds these
    classes for cell selection / column resizing); harmless no-ops on the
    public page since neither class is ever present there. */
 .prose-content .selectedCell {
-  background: rgba(11, 30, 59, 0.1);
+  background: rgba(15, 45, 74, 0.1);
 }
 
 .prose-content .column-resize-handle {
@@ -205,7 +205,7 @@ body {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: #ff6b4a;
+  background: #c7a461;
   pointer-events: none;
 }
 
@@ -214,7 +214,7 @@ body {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-base font-bold tracking-wide transition;
   }
   .btn-gold {
-    @apply bg-gradient-to-br from-miami-goldBright to-miami-gold text-miami-navy shadow-[0_10px_24px_-8px_rgba(201,162,75,0.55)] hover:shadow-[0_14px_30px_-8px_rgba(201,162,75,0.7)] hover:-translate-y-0.5;
+    @apply bg-gradient-to-br from-miami-goldBright to-miami-gold text-miami-navy shadow-[0_10px_24px_-8px_rgba(199,164,97,0.55)] hover:shadow-[0_14px_30px_-8px_rgba(199,164,97,0.7)] hover:-translate-y-0.5;
   }
   .btn-outline-light {
     @apply border border-white/40 bg-white/10 text-white hover:bg-white/20;

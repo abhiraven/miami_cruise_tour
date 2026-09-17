@@ -23,7 +23,7 @@ export default function MobileBookBar() {
       }`}
     >
       <div
-        className="flex items-center gap-3 border-t border-miami-mist bg-white px-4 py-3 shadow-[0_-8px_28px_rgba(11,30,59,0.14)]"
+        className="flex items-center gap-3 border-t border-miami-mist bg-white px-4 py-3 shadow-[0_-8px_28px_rgba(15,45,74,0.14)]"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-miami-navy to-miami-indigo">

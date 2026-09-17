@@ -11,15 +11,15 @@ const config: Config = {
     extend: {
       colors: {
         miami: {
-          navy: "#0B2E44", // Midnight Ocean
-          indigo: "#0E5C73", // Deep Teal
-          gold: "#FF6B4A", // Sunset Coral
-          goldBright: "#FF9478", // Bright Coral
-          ivory: "#FBF3E7", // Warm Sand
-          pearl: "#F6FBFC", // Soft Pearl (cool aqua-white)
-          mist: "#DCEEF0", // Aqua Mist
-          gray: "#64748B", // Slate Gray
-          onyx: "#0B1720", // Onyx Black
+          navy: "#0F2D4A", // Primary Navy — branding, navigation, strong text
+          indigo: "#3D546C", // Navy → Blue-Gray bridge, for dark-section gradients
+          gold: "#C7A461", // Gold Accent — CTAs, highlights, borders, icons
+          goldBright: "#D8BF90", // Lighter Gold — hover states & gradient highlights
+          ivory: "#E6EEF4", // Light Section Background — subtle secondary sections
+          pearl: "#F7F4ED", // Warm Cream Background — main site background
+          mist: "#EDE2CC", // Soft gold-tinted border tone
+          gray: "#6B7A8F", // Secondary Blue-Gray — supporting text
+          onyx: "#1E1E1E", // Dark Text
         },
       },
       fontFamily: {
