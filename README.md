@@ -85,9 +85,9 @@ SEED_ADMIN_PASS=a-new-password npm run reset-admin-password
 
 This project is built to deploy cleanly to Vercel: connect the repo, add the same environment variables from `.env.local` to the Vercel project's Environment Variables settings (Production and Preview), and deploy. Run `npm run seed` once against the production `DATABASE_URL` (locally, with `.env.local` pointed at production, or via a one-off Vercel deployment shell) to create your first admin account.
 
-`miamicruiseboattour.com` is the placeholder domain baked into `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `middleware.ts`, and the sample contact/privacy email addresses — once you've registered your real domain, update those to match.
+`miamicruiseboattour.com` / `www.miamicruiseboattour.com` are the placeholder domains baked into `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `middleware.ts`, and the sample contact/privacy email addresses — once you've registered your real domain, update those to match. `www` is the canonical host here (this is a new domain, so there's no legacy non-www traffic to preserve).
 
-In Vercel's Domains settings, point **both** the apex domain and the `www` subdomain at "Connect to an environment → Production" (not "Redirect to Another Domain" on either one) — `middleware.ts` is what performs the actual `www` → apex redirect with a true HTTP 301. Setting Vercel's own domain-level redirect on top of that will create a redirect loop.
+In Vercel's Domains settings, point **both** the apex domain and the `www` subdomain at "Connect to an environment → Production" (not "Redirect to Another Domain" on either one) — `middleware.ts` is what performs the actual apex → `www` redirect with a true HTTP 301. Setting Vercel's own domain-level redirect on top of that will create a redirect loop.
 
 ## Project Structure
 

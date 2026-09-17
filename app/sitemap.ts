@@ -8,7 +8,7 @@ import { getPrivacyContent } from "@/lib/privacy-content";
 
 export const dynamic = "force-dynamic";
 
-const BASE_URL = "https://miamicruiseboattour.com";
+const BASE_URL = "https://www.miamicruiseboattour.com";
 
 // Every static route is paired with the SEO settings for that same page so
 // a page marked "noindex" in the admin panel is left out of the sitemap
