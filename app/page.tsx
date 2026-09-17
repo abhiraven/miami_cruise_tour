@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 import FaqAccordion from "@/components/FaqAccordion";
 import { getHomeContent } from "@/lib/home-content";
 import { normalizeExternalUrl } from "@/lib/url";
-import { img, getPostCoverImage } from "@/lib/images";
+import { getPostCoverImage } from "@/lib/images";
 import { sql, ensureSchema } from "@/lib/db";
 import type { Post } from "@/lib/posts";
 import type { IconName } from "@/components/Icon";
@@ -64,16 +64,18 @@ export default async function HomePage() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-white">
-        <Image
-          src={hero.backgroundImage || img("gallerySkyline", 1600)}
-          alt=""
-          fill
-          sizes="100vw"
-          priority
-          quality={55}
-          className="object-cover opacity-25"
-          aria-hidden="true"
-        />
+        {hero.backgroundImage && (
+          <Image
+            src={hero.backgroundImage}
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            quality={55}
+            className="object-cover opacity-25"
+            aria-hidden="true"
+          />
+        )}
         <div
           className="absolute inset-0"
           style={{
@@ -145,15 +147,17 @@ export default async function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="relative h-40 sm:h-52 lg:h-56 w-full rounded-3xl overflow-hidden border-4 border-white shadow-lg">
-              <Image
-                src={hero.backgroundImage || img("heroMain", 1200)}
-                alt={hero.backgroundImageAlt || "The Miami Cruise & Boat Tour: Miami's skyline, Biscayne Bay, and guests on deck during a sunset sailing"}
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                priority
-                className="object-cover"
-              />
+            <div className="relative h-40 sm:h-52 lg:h-56 w-full rounded-3xl overflow-hidden border-4 border-white shadow-lg bg-miami-ivory">
+              {hero.backgroundImage && (
+                <Image
+                  src={hero.backgroundImage}
+                  alt={hero.backgroundImageAlt || "The Miami Cruise & Boat Tour: Miami's skyline, Biscayne Bay, and guests on deck during a sunset sailing"}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  priority
+                  className="object-cover"
+                />
+              )}
             </div>
             <span className="absolute -left-4 top-40 sm:top-48 z-10 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-gradient-to-br from-miami-goldBright to-miami-gold text-center text-miami-navy shadow-lg">
               <span className="text-[10px] font-bold tracking-wide">{hero.priceBadgeLabel}</span>
@@ -161,20 +165,22 @@ export default async function HomePage() {
               <span className="text-[9px] font-semibold tracking-wide">{hero.priceBadgeUnit}</span>
             </span>
             <div className="mt-3 grid grid-cols-2 gap-3">
-              {(hero.collage || []).map((photo, i) => (
-                <div
-                  key={photo.image || i}
-                  className="relative h-20 sm:h-24 lg:h-28 w-full rounded-2xl border-4 border-white overflow-hidden shadow"
-                >
-                  <Image
-                    src={photo.image}
-                    alt={photo.imageAlt || ""}
-                    fill
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+              {(hero.collage || [])
+                .filter((photo) => photo.image)
+                .map((photo, i) => (
+                  <div
+                    key={photo.image || i}
+                    className="relative h-20 sm:h-24 lg:h-28 w-full rounded-2xl border-4 border-white overflow-hidden shadow"
+                  >
+                    <Image
+                      src={photo.image}
+                      alt={photo.imageAlt || ""}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -211,8 +217,10 @@ export default async function HomePage() {
                 pkg.highlighted ? "border-miami-gold shadow-lg ring-2 ring-miami-gold/50 sm:-translate-y-1" : "border-miami-mist hover:shadow-lg"
               }`}
             >
-              <div className="relative h-48 w-full">
-                <Image src={pkg.image} alt={pkg.imageAlt || pkg.title} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
+              <div className="relative h-48 w-full bg-miami-ivory">
+                {pkg.image && (
+                  <Image src={pkg.image} alt={pkg.imageAlt || pkg.title} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
+                )}
                 {pkg.badge && (
                   <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-miami-gold px-3 py-1 text-xs font-bold text-miami-navy shadow">
                     <Icon name="star" className="h-3 w-3" /> {pkg.badge}
@@ -272,8 +280,10 @@ export default async function HomePage() {
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {combosSection.items.map((c) => (
               <div key={c.title} className="flex flex-col overflow-hidden rounded-2xl border border-miami-mist bg-white shadow-sm">
-                <div className="relative h-36 w-full">
-                  <Image src={c.image} alt={c.imageAlt || c.title} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" />
+                <div className="relative h-36 w-full bg-miami-ivory">
+                  {c.image && (
+                    <Image src={c.image} alt={c.imageAlt || c.title} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" />
+                  )}
                 </div>
                 <div className="flex flex-1 flex-col p-6">
                   <h3 className="font-display font-bold text-miami-navy">{c.title}</h3>
@@ -312,7 +322,9 @@ export default async function HomePage() {
 
       {/* BENEFITS (dark) */}
       <section className="relative overflow-hidden bg-gradient-to-br from-miami-navy to-miami-indigo text-white">
-        <Image src={benefits.backgroundImage} alt={benefits.backgroundImageAlt || ""} fill sizes="100vw" quality={55} className="object-cover opacity-25" aria-hidden="true" />
+        {benefits.backgroundImage && (
+          <Image src={benefits.backgroundImage} alt={benefits.backgroundImageAlt || ""} fill sizes="100vw" quality={55} className="object-cover opacity-25" aria-hidden="true" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-br from-miami-navy/95 to-miami-indigo/90" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6">
           <div className="section-head">
@@ -393,13 +405,15 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-miami-indigo to-miami-navy">
-            <Image
-              src={location.image || img("galleryHarbor")}
-              alt={location.imageAlt || "The Miami harbor near our departure marina"}
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
+            {location.image && (
+              <Image
+                src={location.image}
+                alt={location.imageAlt || "The Miami harbor near our departure marina"}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -414,8 +428,10 @@ export default async function HomePage() {
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             {nearby.items.map((item) => (
               <div key={item.title} className="flex flex-col overflow-hidden rounded-2xl border border-miami-mist bg-white sm:flex-row">
-                <div className="relative h-40 w-full sm:h-auto sm:w-40 sm:shrink-0">
-                  <Image src={item.image} alt={item.imageAlt || item.title} fill sizes="200px" className="object-cover" />
+                <div className="relative h-40 w-full sm:h-auto sm:w-40 sm:shrink-0 bg-miami-ivory">
+                  {item.image && (
+                    <Image src={item.image} alt={item.imageAlt || item.title} fill sizes="200px" className="object-cover" />
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="font-display font-bold text-miami-navy">{item.title}</h3>
@@ -487,7 +503,9 @@ export default async function HomePage() {
 
       {/* FINAL CTA */}
       <section className="relative overflow-hidden text-white">
-        <Image src={finalCta.backgroundImage} alt={finalCta.backgroundImageAlt || ""} fill sizes="100vw" quality={60} className="object-cover" aria-hidden="true" />
+        {finalCta.backgroundImage && (
+          <Image src={finalCta.backgroundImage} alt={finalCta.backgroundImageAlt || ""} fill sizes="100vw" quality={60} className="object-cover" aria-hidden="true" />
+        )}
         <div className="absolute inset-0 bg-miami-navy/85" aria-hidden="true" />
         <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
           <span className="eyebrow-dark justify-center">{finalCta.eyebrow}</span>

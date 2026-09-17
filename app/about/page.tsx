@@ -26,18 +26,20 @@ export default async function AboutPage() {
         <p className="mt-2 text-miami-gray max-w-2xl">{hero.subtitle}</p>
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {images.map((image, i) => (
-            <div key={i} className="relative h-56 w-full rounded-2xl overflow-hidden">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(min-width: 640px) 33vw, 100vw"
-                priority={i === 0}
-                className="object-cover"
-              />
-            </div>
-          ))}
+          {images
+            .filter((image) => image.src)
+            .map((image, i) => (
+              <div key={i} className="relative h-56 w-full rounded-2xl overflow-hidden bg-miami-ivory">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                  priority={i === 0}
+                  className="object-cover"
+                />
+              </div>
+            ))}
         </div>
 
         <div className="mt-10 max-w-4xl flex flex-col gap-8">

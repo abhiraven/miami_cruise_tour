@@ -27,15 +27,17 @@ export default async function ContactPage() {
         <p className="mt-2 max-w-2xl text-miami-gray">{hero.subtitle}</p>
 
         <div className="mt-10 overflow-hidden rounded-2xl border border-miami-mist bg-white">
-          <div className="relative h-56 w-full">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes="100vw"
-              priority
-              className="object-cover"
-            />
+          <div className="relative h-56 w-full bg-miami-ivory">
+            {image.src && (
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="100vw"
+                priority
+                className="object-cover"
+              />
+            )}
           </div>
 
           <div className="grid gap-6 p-6 sm:grid-cols-2 sm:p-8">

@@ -9,7 +9,7 @@ export default function Footer({ chrome }: { chrome: SiteChromeContent }) {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 text-sm sm:grid-cols-2 sm:px-6 md:grid-cols-3">
         <div>
           <div className="mb-3 flex items-center gap-2">
-            <BrandMark className="h-6 w-6 shrink-0 text-miami-gold" />
+            <BrandMark className="h-8 w-8 shrink-0 text-miami-gold" />
             <span className="font-display text-lg font-bold text-white">{footer.about.heading}</span>
           </div>
           <p className="text-white/60">{footer.about.text}</p>
