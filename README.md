@@ -111,3 +111,4 @@ scripts/                Node scripts (seed, password reset) — run outside Next
 - Image uploads are validated by file signature (magic bytes), not just the browser-supplied Content-Type, before being stored in Vercel Blob.
 - Cloudflare Turnstile on `/admin/login` is entirely optional — leave `NEXT_PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` unset and the widget is skipped, with a database-backed rate limit (5 attempts / 15 minutes per username+IP) as the fallback brute-force guard.
 - The bundled photography in `lib/images.ts` is free-to-use Unsplash photography, not licensed originals of this specific business — swap in your own licensed photos whenever you have them.
+# miami_cruise_tour
