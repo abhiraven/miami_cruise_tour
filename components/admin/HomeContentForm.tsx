@@ -175,6 +175,21 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
             value={content.hero?.backgroundImage}
             onChange={(v) => update(["hero", "backgroundImage"], v)}
             uploadType="site"
+            altValue={content.hero?.backgroundImageAlt}
+            onAltChange={(v) => update(["hero", "backgroundImageAlt"], v)}
+            altLabel="Alt Text (for accessibility & SEO)"
+          />
+        </div>
+        <div className="mt-4">
+          <div className="text-xs font-semibold text-miami-navy/70 mb-2">Hero Collage Photos (the 4 small tiles next to the main hero photo)</div>
+          <Repeater
+            items={content.hero?.collage}
+            onChange={(v) => update(["hero", "collage"], v)}
+            fields={[
+              { key: "image", label: "Photo", type: "image", uploadType: "site" },
+              { key: "imageAlt", label: "Photo Alt Text (for accessibility & SEO)" },
+            ]}
+            addLabel="+ Add Collage Photo"
           />
         </div>
       </Section>
@@ -236,6 +251,9 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
           value={content.benefits?.backgroundImage}
           onChange={(v) => update(["benefits", "backgroundImage"], v)}
           uploadType="site"
+          altValue={content.benefits?.backgroundImageAlt}
+          onAltChange={(v) => update(["benefits", "backgroundImageAlt"], v)}
+          altLabel="Alt Text (for accessibility & SEO)"
         />
         <Repeater
           items={content.benefits?.items}
@@ -288,6 +306,17 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
           <Field label="Boarding Time" value={content.location?.boardingTime} onChange={(v) => update(["location", "boardingTime"], v)} />
           <Field label="Nearest Metro / Tram" value={content.location?.metro} onChange={(v) => update(["location", "metro"], v)} />
         </div>
+        <div className="mt-3">
+          <ImageUploadField
+            label="Photo (shown beside the meeting point details)"
+            value={content.location?.image}
+            onChange={(v) => update(["location", "image"], v)}
+            uploadType="site"
+            altValue={content.location?.imageAlt}
+            onAltChange={(v) => update(["location", "imageAlt"], v)}
+            altLabel="Alt Text (for accessibility & SEO)"
+          />
+        </div>
       </Section>
 
       <Section title="Nearby Attractions" description="More ways to experience Miami">
@@ -300,6 +329,7 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
             { key: "title", label: "Title" },
             { key: "body", label: "Body", textarea: true },
             { key: "image", label: "Photo", type: "image", uploadType: "site" },
+            { key: "imageAlt", label: "Photo Alt Text (for accessibility & SEO)" },
           ]}
         />
       </Section>
@@ -328,6 +358,9 @@ export default function HomeContentForm({ initialContent }: { initialContent: Ho
           value={content.finalCta?.backgroundImage}
           onChange={(v) => update(["finalCta", "backgroundImage"], v)}
           uploadType="site"
+          altValue={content.finalCta?.backgroundImageAlt}
+          onAltChange={(v) => update(["finalCta", "backgroundImageAlt"], v)}
+          altLabel="Alt Text (for accessibility & SEO)"
         />
       </Section>
 

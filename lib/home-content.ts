@@ -69,13 +69,15 @@ export interface HomeContent {
     priceBadgeValue: string;
     priceBadgeUnit: string;
     backgroundImage: string;
+    backgroundImageAlt: string;
+    collage: { image: string; imageAlt: string }[];
   };
   trustBar: { items: IconTextItem[] };
   packagesSection: { eyebrow: string; title: string; subtitle: string };
   packages: PackageItem[];
   combosSection: { eyebrow: string; title: string; items: ComboItem[] };
   priceBreakdown: { eyebrow: string; title: string; items: PriceBreakdownItem[] };
-  benefits: { eyebrow: string; title: string; backgroundImage: string; items: IconTextItem[] };
+  benefits: { eyebrow: string; title: string; backgroundImage: string; backgroundImageAlt?: string; items: IconTextItem[] };
   highlights: { eyebrow: string; title: string; items: IconTextItem[]; footnote: string };
   schedule: {
     eyebrow: string;
@@ -91,10 +93,12 @@ export interface HomeContent {
     address: string;
     boardingTime: string;
     metro: string;
+    image: string;
+    imageAlt: string;
   };
-  nearby: { eyebrow: string; title: string; items: { title: string; body: string; image: string }[] };
+  nearby: { eyebrow: string; title: string; items: { title: string; body: string; image: string; imageAlt?: string }[] };
   faq: { eyebrow: string; title: string; items: FaqItem[] };
-  finalCta: { eyebrow: string; title: string; subtitle: string; ctaText: string; backgroundImage: string };
+  finalCta: { eyebrow: string; title: string; subtitle: string; ctaText: string; backgroundImage: string; backgroundImageAlt?: string };
 }
 
 // Full editable copy for every section of the homepage. This is the
@@ -130,6 +134,13 @@ export const DEFAULT_HOME_CONTENT: HomeContent = {
     priceBadgeValue: "$49",
     priceBadgeUnit: "per person",
     backgroundImage: img("heroMain"),
+    backgroundImageAlt: "The Miami Cruise & Boat Tour: Miami's skyline, Biscayne Bay, and guests on deck during a sunset sailing",
+    collage: [
+      { image: img("galleryHarbor"), imageAlt: "Aerial view of the Miami harbor where our boats depart" },
+      { image: img("galleryDeck"), imageAlt: "Guests relaxing on deck during the Miami Cruise & Boat Tour" },
+      { image: img("galleryMarina"), imageAlt: "A marina dock lined with boats in Miami" },
+      { image: img("gallerySkyline"), imageAlt: "Miami's skyline seen from the water, across Biscayne Bay" },
+    ],
   },
 
   trustBar: {
@@ -234,6 +245,7 @@ export const DEFAULT_HOME_CONTENT: HomeContent = {
     eyebrow: "THE ON-THE-WATER EXPERIENCE",
     title: "Why Guests Choose Our Miami Boat Tour",
     backgroundImage: img("benefitsBg"),
+    backgroundImageAlt: "",
     items: [
       { icon: "sparkles", title: "Miami's Best Skyline View", body: "There's no better way to see Miami's skyline, Star Island, and Biscayne Bay than from the water — no daytime walking tour compares." },
       { icon: "music", title: "Live DJ & Party Atmosphere", body: "Our sunset cruises bring the energy of a Miami night out onto the water, with a live DJ and a full drinks package." },
@@ -273,14 +285,16 @@ export const DEFAULT_HOME_CONTENT: HomeContent = {
     address: "Bayside Marketplace Marina, Downtown Miami (confirmed on your ticket)",
     boardingTime: "30 minutes before departure",
     metro: "Metromover Bayfront Park station",
+    image: img("galleryHarbor"),
+    imageAlt: "The Miami harbor near our departure marina",
   },
 
   nearby: {
     eyebrow: "MORE OF MIAMI",
     title: "More Ways to Experience Miami",
     items: [
-      { title: "Everglades Airboat Tour", body: "An adrenaline-filled airboat ride through the Everglades, about an hour from downtown Miami.", image: img("galleryDeck") },
-      { title: "South Beach Art Deco Walking Tour", body: "Explore the pastel-colored Art Deco architecture along Ocean Drive on foot.", image: img("gallerySkyline") },
+      { title: "Everglades Airboat Tour", body: "An adrenaline-filled airboat ride through the Everglades, about an hour from downtown Miami.", image: img("galleryDeck"), imageAlt: "An airboat cruising through the Everglades near Miami" },
+      { title: "South Beach Art Deco Walking Tour", body: "Explore the pastel-colored Art Deco architecture along Ocean Drive on foot.", image: img("gallerySkyline"), imageAlt: "Colorful Art Deco buildings along Ocean Drive in South Beach, Miami" },
     ],
   },
 
@@ -304,6 +318,7 @@ export const DEFAULT_HOME_CONTENT: HomeContent = {
     subtitle: "Seats for today's Miami Cruise & Boat Tour are limited — reserve now and watch Miami's skyline light up from the bay.",
     ctaText: "Reserve Your Miami Cruise & Boat Tour",
     backgroundImage: img("finalCtaBg"),
+    backgroundImageAlt: "",
   },
 };
 

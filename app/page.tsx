@@ -9,19 +9,6 @@ import { img, getPostCoverImage } from "@/lib/images";
 import { sql, ensureSchema } from "@/lib/db";
 import type { Post } from "@/lib/posts";
 import type { IconName } from "@/components/Icon";
-import type { LocalImageKey } from "@/lib/images";
-
-// Hero collage tiles below the main photo — bundled Miami boat-tour shots
-// reused from the gallery, mirroring the multi-photo hero collage pattern
-// from the BosphorusDinner-Cruises reference (one large image + a 2x2 grid
-// of smaller ones) so the hero reads as richly photographic instead of a
-// single boxed image floating on a flat gradient.
-const HERO_COLLAGE: { key: LocalImageKey; alt: string }[] = [
-  { key: "galleryHarbor", alt: "Aerial view of the Miami harbor where our boats depart" },
-  { key: "galleryDeck", alt: "Guests relaxing on deck during the Miami Cruise & Boat Tour" },
-  { key: "galleryMarina", alt: "A marina dock lined with boats in Miami" },
-  { key: "gallerySkyline", alt: "Miami's skyline seen from the water, across Biscayne Bay" },
-];
 
 export const dynamic = "force-dynamic";
 
@@ -161,7 +148,7 @@ export default async function HomePage() {
             <div className="relative h-40 sm:h-52 lg:h-56 w-full rounded-3xl overflow-hidden border-4 border-white shadow-lg">
               <Image
                 src={hero.backgroundImage || img("heroMain", 1200)}
-                alt="The Miami Cruise & Boat Tour: Miami's skyline, Biscayne Bay, and guests on deck during a sunset sailing"
+                alt={hero.backgroundImageAlt || "The Miami Cruise & Boat Tour: Miami's skyline, Biscayne Bay, and guests on deck during a sunset sailing"}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 priority
@@ -174,14 +161,14 @@ export default async function HomePage() {
               <span className="text-[9px] font-semibold tracking-wide">{hero.priceBadgeUnit}</span>
             </span>
             <div className="mt-3 grid grid-cols-2 gap-3">
-              {HERO_COLLAGE.map((photo) => (
+              {(hero.collage || []).map((photo, i) => (
                 <div
-                  key={photo.key}
+                  key={photo.image || i}
                   className="relative h-20 sm:h-24 lg:h-28 w-full rounded-2xl border-4 border-white overflow-hidden shadow"
                 >
                   <Image
-                    src={img(photo.key, 700)}
-                    alt={photo.alt}
+                    src={photo.image}
+                    alt={photo.imageAlt || ""}
                     fill
                     sizes="(min-width: 1024px) 25vw, 50vw"
                     className="object-cover"
@@ -325,7 +312,7 @@ export default async function HomePage() {
 
       {/* BENEFITS (dark) */}
       <section className="relative overflow-hidden bg-gradient-to-br from-miami-navy to-miami-indigo text-white">
-        <Image src={benefits.backgroundImage} alt="" fill sizes="100vw" quality={55} className="object-cover opacity-25" aria-hidden="true" />
+        <Image src={benefits.backgroundImage} alt={benefits.backgroundImageAlt || ""} fill sizes="100vw" quality={55} className="object-cover opacity-25" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-miami-navy/95 to-miami-indigo/90" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6">
           <div className="section-head">
@@ -407,8 +394,8 @@ export default async function HomePage() {
           </div>
           <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-miami-indigo to-miami-navy">
             <Image
-              src={img("galleryHarbor")}
-              alt="The Miami harbor near our departure marina"
+              src={location.image || img("galleryHarbor")}
+              alt={location.imageAlt || "The Miami harbor near our departure marina"}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
@@ -428,7 +415,7 @@ export default async function HomePage() {
             {nearby.items.map((item) => (
               <div key={item.title} className="flex flex-col overflow-hidden rounded-2xl border border-miami-mist bg-white sm:flex-row">
                 <div className="relative h-40 w-full sm:h-auto sm:w-40 sm:shrink-0">
-                  <Image src={item.image} alt={item.title} fill sizes="200px" className="object-cover" />
+                  <Image src={item.image} alt={item.imageAlt || item.title} fill sizes="200px" className="object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-display font-bold text-miami-navy">{item.title}</h3>
@@ -500,7 +487,7 @@ export default async function HomePage() {
 
       {/* FINAL CTA */}
       <section className="relative overflow-hidden text-white">
-        <Image src={finalCta.backgroundImage} alt="" fill sizes="100vw" quality={60} className="object-cover" aria-hidden="true" />
+        <Image src={finalCta.backgroundImage} alt={finalCta.backgroundImageAlt || ""} fill sizes="100vw" quality={60} className="object-cover" aria-hidden="true" />
         <div className="absolute inset-0 bg-miami-navy/85" aria-hidden="true" />
         <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
           <span className="eyebrow-dark justify-center">{finalCta.eyebrow}</span>
