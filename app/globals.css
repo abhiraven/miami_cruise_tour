@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+body {
+  background-color: #f6fbfc;
+  color: #0b1720;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+/* Styling for the admin rich-text editor's output (Tiptap renders its
+   content with class="prose-content rte-content" — see RichTextEditor.js).
+   Without these rules, pasted/typed headings, lists, blockquotes, links,
+   images, and tables all come through as real HTML but render with no
+   visual distinction from a plain paragraph. */
+.prose-content h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #0b2e44;
+}
+
+.prose-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #0b2e44;
+}
+
+.prose-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  color: #0b2e44;
+}
+
+.prose-content h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #0b2e44;
+}
+
+.prose-content h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #0b2e44;
+}
+
+.prose-content h6 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #0b2e44;
+}
+
+.prose-content p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.prose-content strong {
+  color: #0b2e44;
+}
+
+.prose-content em {
+  font-style: italic;
+}
+
+.prose-content u {
+  text-decoration: underline;
+}
+
+.prose-content s,
+.prose-content strike {
+  text-decoration: line-through;
+}
+
+.prose-content ul,
+.prose-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  line-height: 1.75;
+}
+
+.prose-content ul {
+  list-style-type: disc;
+}
+
+.prose-content ol {
+  list-style-type: decimal;
+}
+
+.prose-content li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-content blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #ff6b4a;
+  color: rgba(11, 30, 59, 0.7);
+  font-style: italic;
+}
+
+.prose-content a {
+  color: #ff6b4a;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-content img {
+  margin: 1.5rem 0;
+  border-radius: 1rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose-content .editor-image-figure {
+  margin: 1.5rem 0;
+}
+
+.prose-content .editor-image-figure img {
+  margin: 0;
+}
+
+.prose-content .editor-image-figure figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: rgba(11, 30, 59, 0.6);
+}
+
+.prose-content hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid #dceef0;
+}
+
+.prose-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: rgba(11, 30, 59, 0.35);
+  pointer-events: none;
+  height: 0;
+}
+
+/* Pasted/inserted tables — both inside the admin editor and on the public
+   blog page, since both render through this same .prose-content class. */
+.prose-content .tableWrapper {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.prose-content table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.prose-content th,
+.prose-content td {
+  border: 1px solid #dceef0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  min-width: 3em;
+  line-height: 1.5;
+}
+
+.prose-content th {
+  background: #dceef0;
+  font-weight: 700;
+  color: #0b2e44;
+}
+
+/* Only relevant inside the editor (Tiptap's Table extension adds these
+   classes for cell selection / column resizing); harmless no-ops on the
+   public page since neither class is ever present there. */
+.prose-content .selectedCell {
+  background: rgba(11, 30, 59, 0.1);
+}
+
+.prose-content .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #ff6b4a;
+  pointer-events: none;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-base font-bold tracking-wide transition;
+  }
+  .btn-gold {
+    @apply bg-gradient-to-br from-miami-goldBright to-miami-gold text-miami-navy shadow-[0_10px_24px_-8px_rgba(201,162,75,0.55)] hover:shadow-[0_14px_30px_-8px_rgba(201,162,75,0.7)] hover:-translate-y-0.5;
+  }
+  .btn-outline-light {
+    @apply border border-white/40 bg-white/10 text-white hover:bg-white/20;
+  }
+  .btn-outline-navy {
+    @apply border border-miami-navy/25 text-miami-navy hover:bg-miami-navy/5;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full bg-miami-navy/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-miami-navy;
+  }
+  .eyebrow-dark {
+    @apply inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-miami-goldBright;
+  }
+  .section-head h2 {
+    @apply mt-2.5 font-display text-3xl font-bold text-miami-navy sm:text-4xl;
+  }
+  .section-head p {
+    @apply mt-3 max-w-2xl text-base text-miami-gray;
+  }
+  .input {
+    @apply w-full rounded-[10px] border border-miami-mist bg-miami-pearl px-4 py-3 text-sm text-miami-onyx;
+  }
+  .input:focus {
+    @apply outline outline-2 outline-offset-1 outline-miami-gold;
+  }
+
+  /* --- Admin panel --- */
+  .admin-label {
+    @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-miami-navy;
+  }
+  .admin-input {
+    @apply w-full rounded-lg border border-miami-mist bg-white px-3 py-2 text-sm text-miami-onyx focus:outline focus:outline-2 focus:outline-miami-navy;
+  }
+  .admin-section {
+    @apply rounded-2xl border border-miami-mist bg-white p-6;
+  }
+  .admin-card {
+    @apply rounded-2xl border border-miami-mist bg-white p-6;
+  }
+  .admin-card-title {
+    @apply font-display text-lg font-bold text-miami-navy;
+  }
+  .admin-icon-btn {
+    @apply flex h-7 w-7 items-center justify-center rounded-md border border-miami-mist text-xs text-miami-navy hover:bg-miami-mist/60 disabled:opacity-30;
+  }
+  .admin-table {
+    @apply w-full border-collapse text-left text-sm;
+  }
+  .admin-table th {
+    @apply border-b border-miami-mist px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-miami-gray;
+  }
+  .admin-table td {
+    @apply border-b border-miami-mist px-3 py-2.5 align-top;
+  }
+}
