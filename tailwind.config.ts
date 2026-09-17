@@ -23,13 +23,15 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // next/font/google self-hosts Playfair Display / Jost at build time
-        // and exposes them as CSS variables on <html> (see app/layout.tsx).
-        // The variable comes first so the real webfont is used once loaded,
-        // with the same system-serif stack as a no-JS/loading fallback.
-        display: ["var(--font-display)", "ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
-        sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
-        serif: ["var(--font-display)", "ui-serif", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
+        // Outfit is the site's one and only typeface. next/font/google
+        // self-hosts it and exposes it as --font-outfit on <html> (see
+        // app/layout.tsx). Every key below — display, sans, serif — points
+        // to the same variable + sans-serif fallback stack, so headings,
+        // body copy, and every other element always render in Outfit
+        // regardless of which font-* utility class is applied to them.
+        display: ["var(--font-outfit)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+        sans: ["var(--font-outfit)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+        serif: ["var(--font-outfit)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
       },
     },
   },

@@ -1,26 +1,21 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Playfair_Display, Jost } from "next/font/google";
+import { Outfit } from "next/font/google";
 import SiteChrome from "@/components/SiteChrome";
 import { getSiteChromeContent } from "@/lib/site-chrome-content";
 import { img } from "@/lib/images";
 
-// next/font/google self-hosts the font files at build time (no runtime
-// request to fonts.googleapis.com, no render-blocking stylesheet, no
-// layout shift) and exposes each as a CSS variable that tailwind.config.ts
-// resolves through font-display / font-sans.
-const playfair = Playfair_Display({
+// Outfit is the single font family used everywhere on the site — headings,
+// body copy, nav, buttons, forms, badges, all of it. next/font/google
+// self-hosts it as a variable font at build time (no runtime request to
+// fonts.googleapis.com, no render-blocking stylesheet, no layout shift)
+// and exposes it as one CSS variable that tailwind.config.ts's
+// font-display / font-sans / font-serif all resolve to, so there is only
+// ever one typeface on the page regardless of which utility class is used.
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-body",
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -65,7 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <html lang="en" className={`${playfair.variable} ${jost.variable}`}>
+    <html lang="en" className={outfit.variable}>
       <body className="font-sans antialiased">
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
