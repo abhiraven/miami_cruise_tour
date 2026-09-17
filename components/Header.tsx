@@ -17,11 +17,11 @@ export default function Header({ chrome }: { chrome: SiteChromeContent }) {
           <BrandMark className="h-11 w-11 shrink-0 text-miami-gold" />
           <span className="flex flex-col">
             <span className="font-display text-2xl font-bold text-miami-navy">
-              {(logo?.mainText || "Miami Cruise").replace(/\.$/, "")}
-              <span className="text-miami-gold">.</span>
+              {(logo?.mainText ?? "").replace(/\.$/, "")}
+              {logo?.mainText && <span className="text-miami-gold">.</span>}
             </span>
             <span className="mt-1 text-[9px] uppercase tracking-[0.22em] text-miami-gray">
-              {logo?.subText || "& Boat Tour"}
+              {logo?.subText ?? ""}
             </span>
           </span>
         </Link>
