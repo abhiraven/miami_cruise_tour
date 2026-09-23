@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import DOMPurify from "isomorphic-dompurify";
 import { sql, ensureSchema } from "@/lib/db";
+import { sanitizePostContent } from "@/lib/sanitize-post-content";
 import { getPostCoverImage } from "@/lib/images";
 import type { Post } from "@/lib/posts";
 
@@ -91,7 +91,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
             <div
               className="prose prose-neutral mt-8 max-w-none prose-headings:font-display prose-headings:text-miami-navy prose-a:text-miami-navy prose-a:underline prose-strong:text-miami-navy"
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
+              dangerouslySetInnerHTML={{ __html: sanitizePostContent(post.content) }}
             />
 
             <div className="mt-12 rounded-2xl bg-miami-navy p-8 text-center text-white">

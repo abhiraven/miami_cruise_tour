@@ -1,33 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
-  experimental: {
-    // jsdom (used server-side, only in app/blog/[slug]/page.tsx, to run
-    // isomorphic-dompurify's HTML sanitizer) loads a CSS asset at runtime
-    // via a computed `fs.readFileSync(path.resolve(__dirname, ...))` call.
-    // When webpack bundles that code into the route's single compiled
-    // page.js, it rewrites `__dirname` to a synthetic path under
-    // `.next/server/app/...` that doesn't match jsdom's real file layout,
-    // so the computed path points nowhere and the read throws ENOENT the
-    // moment the page tries to sanitize any content -- no amount of
-    // copying the real file in fixes that, since the compiled code is
-    // looking in the wrong place entirely. Marking these packages
-    // "external" stops webpack from bundling/rewriting them at all: at
-    // runtime they're loaded with a plain Node `require()` straight from
-    // node_modules, so `__dirname` resolves correctly and the file is
-    // found where it actually lives.
-    serverComponentsExternalPackages: ["isomorphic-dompurify", "jsdom"],
-    // Belt-and-suspenders: with jsdom external, Next's build-output file
-    // tracer (which decides what from node_modules ships with the
-    // deployed function) should already pick up whatever jsdom requires
-    // via normal, non-bundled `require()` calls -- but the CSS file below
-    // is loaded through a *computed* path, not a static `require`/`import`,
-    // which tracers can't always follow. This makes sure it's included
-    // either way. The glob matches jsdom wherever npm hoists/nests it.
-    outputFileTracingIncludes: {
-      "/blog/[slug]": ["./node_modules/**/jsdom/lib/jsdom/browser/default-stylesheet.css"],
-    },
-  },
   images: {
     // Local files under /public are optimized automatically with no config
     // needed. These remote patterns cover the two *external* image sources
