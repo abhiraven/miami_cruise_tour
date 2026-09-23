@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth-server";
 import { hasPageAccess } from "@/lib/admin-pages";
 import { sql, ensureSchema } from "@/lib/db";
 import { slugify } from "@/lib/posts";
+import { sanitizeCoverImage } from "@/lib/images";
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   const session = await getSession();
@@ -47,7 +48,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         noindex = ${body.noindex ? 1 : 0},
         seo_title = ${body.seo_title || ""},
         meta_description = ${body.meta_description || ""},
-        cover_image = ${body.cover_image || ""},
+        cover_image = ${sanitizeCoverImage(body.cover_image)},
         cover_image_alt = ${body.cover_image_alt || ""},
         updated_at = NOW()
       WHERE id = ${id}

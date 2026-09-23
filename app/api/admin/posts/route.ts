@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth-server";
 import { hasPageAccess } from "@/lib/admin-pages";
 import { sql, ensureSchema } from "@/lib/db";
 import { slugify } from "@/lib/posts";
+import { sanitizeCoverImage } from "@/lib/images";
 
 export async function GET() {
   const session = await getSession();
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
       ) VALUES (
         ${title}, ${slug}, ${body.excerpt || ""}, ${body.content || ""}, ${body.cover_color || "navy"}, ${body.category || "Cruise Tips"},
         ${body.featured ? 1 : 0}, ${body.published === false ? 0 : 1}, ${body.noindex ? 1 : 0}, ${body.seo_title || ""}, ${body.meta_description || ""},
-        ${body.cover_image || ""}, ${body.cover_image_alt || ""}
+        ${sanitizeCoverImage(body.cover_image)}, ${body.cover_image_alt || ""}
       )
       RETURNING id
     `;
