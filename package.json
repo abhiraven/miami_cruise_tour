@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "seed": "node scripts/seed.js",
-    "reset-admin-password": "node scripts/reset-admin-password.js"
+    "reset-admin-password": "node scripts/reset-admin-password.js",
+    "seed:post": "node scripts/seed-post.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.5",
