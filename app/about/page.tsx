@@ -2,7 +2,8 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { getAboutContent } from "@/lib/about-content";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getAboutContent();

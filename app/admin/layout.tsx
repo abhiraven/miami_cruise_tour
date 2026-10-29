@@ -27,3 +27,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     </div>
   );
 }
+
+// Admin always reads live data (the root layout caches DB reads for public pages).
+export const fetchCache = "force-no-store";

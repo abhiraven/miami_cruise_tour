@@ -1,3 +1,4 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { getSession } from "@/lib/auth-server";
@@ -41,7 +42,7 @@ function detectMime(buffer: Buffer): string | null {
 
 const MAX_SIZE = 8 * 1024 * 1024; // 8MB
 
-export async function POST(req: NextRequest) {
+async function __POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
 
@@ -92,3 +93,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Upload failed. Please try again." }, { status: 500 });
   }
 }
+
+export const POST = withRevalidate(__POST);

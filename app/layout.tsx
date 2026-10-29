@@ -37,7 +37,6 @@ export const metadata: Metadata = {
 // request and threads it down through SiteChrome — which is why every page
 // under it needs to render dynamically rather than being statically
 // generated at build time (see the "force-dynamic" export on each page).
-export const dynamic = "force-dynamic";
 
 // This site's GA4 measurement ID — hardcoded rather than pulled from
 // NEXT_PUBLIC_GA_ID so tracking works out of the box without needing that
@@ -76,3 +75,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </html>
   );
 }
+
+// Neon compute fix: public pages are cached (ISR, `force-static` on each
+// public page) instead of querying the database on every request, so the
+// Neon compute can scale to zero between edits. Every successful admin save
+// calls revalidatePath("/", "layout") (see lib/revalidate), so edits still
+// appear on the live site immediately. Admin pages stay force-dynamic.
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh

@@ -10,7 +10,8 @@ import { sql, ensureSchema } from "@/lib/db";
 import type { Post } from "@/lib/posts";
 import type { IconName } from "@/components/Icon";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 // Same "From the Blog" homepage preview pattern as the Spanish Riding
 // School reference: latest 3 published posts, silently omitted if there

@@ -3,7 +3,8 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import { getContactContent } from "@/lib/contact-content";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getContactContent();

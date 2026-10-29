@@ -6,7 +6,9 @@ import { getContactContent } from "@/lib/contact-content";
 import { getBlogContent } from "@/lib/blog-content";
 import { getPrivacyContent } from "@/lib/privacy-content";
 
-export const dynamic = "force-dynamic";
+// Cached; purged on every admin save (see lib/revalidate).
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 const BASE_URL = "https://www.miamicruisetour.com";
 

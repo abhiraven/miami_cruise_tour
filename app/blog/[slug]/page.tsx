@@ -7,7 +7,8 @@ import { sanitizePostContent } from "@/lib/sanitize-post-content";
 import { getPostCoverImage } from "@/lib/images";
 import type { Post } from "@/lib/posts";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 async function getPost(slug: string): Promise<Post | null> {
   try {

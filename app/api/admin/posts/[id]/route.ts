@@ -1,3 +1,4 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth-server";
 import { hasPageAccess } from "@/lib/admin-pages";
@@ -20,7 +21,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
   return NextResponse.json({ post });
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+async function __PUT(req: NextRequest, { params }: { params: { id: string } }) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   if (!hasPageAccess(session, "posts")) return NextResponse.json({ error: "Not authorized." }, { status: 403 });
@@ -66,7 +67,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+async function __DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   if (session.role !== "admin") return NextResponse.json({ error: "Only admins can delete posts." }, { status: 403 });
@@ -78,3 +79,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
   await sql`DELETE FROM posts WHERE id = ${id}`;
   return NextResponse.json({ ok: true });
 }
+
+export const PUT = withRevalidate(__PUT);
+export const DELETE = withRevalidate(__DELETE);

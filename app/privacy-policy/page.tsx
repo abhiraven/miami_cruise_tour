@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { getPrivacyContent } from "@/lib/privacy-content";
 import RichText from "@/components/RichText";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPrivacyContent();

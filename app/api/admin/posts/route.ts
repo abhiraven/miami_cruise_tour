@@ -1,3 +1,4 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth-server";
 import { hasPageAccess } from "@/lib/admin-pages";
@@ -20,7 +21,7 @@ export async function GET() {
   }
 }
 
-export async function POST(req: NextRequest) {
+async function __POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   if (!hasPageAccess(session, "posts")) return NextResponse.json({ error: "Not authorized." }, { status: 403 });
@@ -56,3 +57,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to create post." }, { status: 500 });
   }
 }
+
+export const POST = withRevalidate(__POST);
